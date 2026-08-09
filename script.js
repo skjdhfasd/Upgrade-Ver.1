@@ -30,30 +30,73 @@
     mobileTabs: document.querySelectorAll(".mobile-tab"),
   };
 
-  /* ---------- 헤더 필터 영역 접기/펼치기 (터치 기기용) ---------- */
+  /* ---------- 헤더 필터 영역 hover 트리거 슬라이드 애니메이션 ---------- */
   const appHeader = document.querySelector(".app-header");
   const brandToggle = document.getElementById("brandToggle");
+  const filterBar = document.getElementById("filterBar");
 
+  function openFilterBar() {
+    // 콘텐츠의 실제 높이(scrollHeight)를 측정해 px 값으로 애니메이션
+    filterBar.style.height = `${filterBar.scrollHeight}px`;
+  }
+
+  function closeFilterBar() {
+    filterBar.style.height = "0px";
+  }
+
+  function isPinned() {
+    return appHeader.classList.contains("is-pinned");
+  }
+
+  // 트리거 1: 마우스 호버 (PC)
+  appHeader.addEventListener("mouseenter", openFilterBar);
+  appHeader.addEventListener("mouseleave", () => {
+    if (!isPinned()) closeFilterBar();
+  });
+
+  // 트리거 2: 키보드 포커스 (접근성)
+  appHeader.addEventListener("focusin", openFilterBar);
+  appHeader.addEventListener("focusout", (e) => {
+    if (!appHeader.contains(e.relatedTarget) && !isPinned()) {
+      closeFilterBar();
+    }
+  });
+
+  // 트리거 3: 탭/클릭 고정 (터치 기기 — hover가 없는 환경 대응)
   function setHeaderPinned(pinned) {
     appHeader.classList.toggle("is-pinned", pinned);
     brandToggle.setAttribute("aria-expanded", String(pinned));
+    if (pinned) {
+      openFilterBar();
+    } else {
+      closeFilterBar();
+    }
   }
 
   brandToggle.addEventListener("click", () => {
-    setHeaderPinned(!appHeader.classList.contains("is-pinned"));
+    setHeaderPinned(!isPinned());
   });
 
   brandToggle.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      setHeaderPinned(!appHeader.classList.contains("is-pinned"));
+      setHeaderPinned(!isPinned());
     }
   });
 
-  // 헤더 바깥을 탭하면 펼쳐진 필터 영역을 다시 접음 (모바일)
+  // 헤더 바깥을 탭하면 고정 해제 (모바일)
   document.addEventListener("click", (e) => {
-    if (!appHeader.contains(e.target)) {
+    if (!appHeader.contains(e.target) && isPinned()) {
       setHeaderPinned(false);
+    }
+  });
+
+  // 화면 크기 변경 시(칩 줄바꿈 등으로 콘텐츠 높이가 달라질 수 있음) 열린 상태면 높이 재계산
+  window.addEventListener("resize", () => {
+    if (filterBar.style.height !== "0px" && filterBar.style.height !== "") {
+      filterBar.style.height = "auto";
+      const h = filterBar.scrollHeight;
+      filterBar.style.height = `${h}px`;
     }
   });
 

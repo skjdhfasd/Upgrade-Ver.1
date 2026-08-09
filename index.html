@@ -19,36 +19,41 @@
   <!-- ===================== 헤더 & 필터 바 ===================== -->
   <header class="app-header">
     <div class="header-inner">
-      <div class="brand">
+      <div class="brand" id="brandToggle" role="button" tabindex="0" aria-expanded="false" aria-controls="filterBar">
         <span class="brand-eyebrow">TEAM · 바이브 FOUR YOU</span>
-        <h1 class="brand-title">AI 기반 관광 소비 분산 플랫폼</h1>
+        <h1 class="brand-title">
+          AI 기반 관광 소비 분산 플랫폼
+          <span class="brand-hint">필터 <span class="chevron">▾</span></span>
+        </h1>
       </div>
       <div class="header-clock" id="liveClock" aria-live="polite">--:--:--</div>
     </div>
 
-    <div class="filter-bar" role="region" aria-label="필터 옵션">
-      <div class="filter-row filter-scroll" id="shiftFilter" aria-label="시간대 필터">
-        <button class="chip is-active" data-filter-type="shift" data-value="전체">전체</button>
-        <button class="chip" data-filter-type="shift" data-value="아침">아침 SHIFT</button>
-        <button class="chip" data-filter-type="shift" data-value="오후">오후 SHIFT</button>
-        <button class="chip" data-filter-type="shift" data-value="저녁">저녁 SHIFT</button>
-      </div>
+    <div class="filter-bar" id="filterBar" role="region" aria-label="필터 옵션">
+      <div class="filter-bar-inner">
+        <div class="filter-row filter-scroll" id="shiftFilter" aria-label="시간대 필터">
+          <button class="chip is-active" data-filter-type="shift" data-value="전체">전체</button>
+          <button class="chip" data-filter-type="shift" data-value="아침">아침 SHIFT</button>
+          <button class="chip" data-filter-type="shift" data-value="오후">오후 SHIFT</button>
+          <button class="chip" data-filter-type="shift" data-value="저녁">저녁 SHIFT</button>
+        </div>
 
-      <div class="filter-row filter-scroll" id="categoryFilter" aria-label="카테고리 필터">
-        <button class="chip is-active" data-filter-type="category" data-value="전체">전체</button>
-        <button class="chip" data-filter-type="category" data-value="식당·카페">식당·카페</button>
-        <button class="chip" data-filter-type="category" data-value="관광지">관광지</button>
-        <button class="chip" data-filter-type="category" data-value="숙박">숙박</button>
-        <button class="chip" data-filter-type="category" data-value="전기차충전소">전기차 충전소</button>
-      </div>
+        <div class="filter-row filter-scroll" id="categoryFilter" aria-label="카테고리 필터">
+          <button class="chip is-active" data-filter-type="category" data-value="전체">전체</button>
+          <button class="chip" data-filter-type="category" data-value="식당·카페">식당·카페</button>
+          <button class="chip" data-filter-type="category" data-value="관광지">관광지</button>
+          <button class="chip" data-filter-type="category" data-value="숙박">숙박</button>
+          <button class="chip" data-filter-type="category" data-value="전기차충전소">전기차 충전소</button>
+        </div>
 
-      <div class="filter-row toggle-row">
-        <button class="toggle-btn" id="walkToggle" type="button" aria-pressed="false">
-          🚶‍♂️ 도보 이동 가능 (하이원 기준 1~2km)
-        </button>
-        <button class="toggle-btn toggle-btn--accent" id="rerouteToggle" type="button" aria-pressed="false">
-          🚦 실시간 우회 추천
-        </button>
+        <div class="filter-row toggle-row">
+          <button class="toggle-btn" id="walkToggle" type="button" aria-pressed="false">
+            🚶‍♂️ 도보 이동 가능 (하이원 기준 1~2km)
+          </button>
+          <button class="toggle-btn toggle-btn--accent" id="rerouteToggle" type="button" aria-pressed="false">
+            🚦 실시간 우회 추천
+          </button>
+        </div>
       </div>
     </div>
   </header>
