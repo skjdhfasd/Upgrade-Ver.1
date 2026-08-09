@@ -30,6 +30,33 @@
     mobileTabs: document.querySelectorAll(".mobile-tab"),
   };
 
+  /* ---------- 헤더 필터 영역 접기/펼치기 (터치 기기용) ---------- */
+  const appHeader = document.querySelector(".app-header");
+  const brandToggle = document.getElementById("brandToggle");
+
+  function setHeaderPinned(pinned) {
+    appHeader.classList.toggle("is-pinned", pinned);
+    brandToggle.setAttribute("aria-expanded", String(pinned));
+  }
+
+  brandToggle.addEventListener("click", () => {
+    setHeaderPinned(!appHeader.classList.contains("is-pinned"));
+  });
+
+  brandToggle.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setHeaderPinned(!appHeader.classList.contains("is-pinned"));
+    }
+  });
+
+  // 헤더 바깥을 탭하면 펼쳐진 필터 영역을 다시 접음 (모바일)
+  document.addEventListener("click", (e) => {
+    if (!appHeader.contains(e.target)) {
+      setHeaderPinned(false);
+    }
+  });
+
   /* ---------- 실시간 디지털 시계 ---------- */
   function updateClock() {
     const now = new Date();
